@@ -427,7 +427,8 @@
   <div class="how-to">
     マウスを動かす・画面をなぞって <strong>アスラン</strong> を操作して<br>
     落ちてくる <strong>キラ</strong> をキャッチしよう！<br>
-    5回成功でクリア 💕
+    5回成功でクリア 💕<br>
+    もしキラをキャッチできなかったら……？
   </div>
   <button class="start-btn" id="start-btn">スタート ▶</button>
 </div>
@@ -491,11 +492,11 @@ const SEME_CHAR = '<img src="athrun_mini.png" style="width:60px;height:auto">'; 
 const ILLUSTS = {
   // --- 成功イラスト ---
   success1: { emoji:  '<img src="1080f01.png" style="max-width:90vw;height:auto;">', title: '成功！', sub: '「…捕まえた」\n…！離してっ!' },
-  success3: { emoji: '<img src="yurusan.jpg" style="max-width:90vw;height:auto;">', title: '3回目の成功！', sub: '「逃がさないって言っただろ？」\n逃げるキラが悪いんだ' },
+  success3: { emoji: '<img src="yurusan.png" style="max-width:90vw;height:auto;">', title: '3回目の成功！', sub: '「逃がさないって言っただろ？」\n逃げるキラが悪いんだ' },
   success5: { emoji: '<img src="gsan.png" style="max-width:90vw;height:auto;">', title: 'クリア！✨', sub: '「もう離さない」\n──── ゲームクリア！お誕生日おめでとう！ 🎉' },
   // --- 失敗イラスト ---
-  fail1: { emoji: '💔', title: '失敗…', sub: '「…間に合わなかった」\nお仕置きが必要かな？' },
-  fail5streak: { emoji: '☠️', title: '【隠し】5連続失敗！', sub: '「…もしかして、わざと？」\nまさかのシナリオ展開…！💊' },
+  fail1: { emoji: '<img src="miss_01.png" style="max-width:90vw;height:auto;">', title: '失敗…', sub: '「…間に合わなかった」\nお仕置きが必要かな？' },
+  fail5streak: { emoji: '<img src="miss_02.png" style="max-width:90vw;height:auto;">', title: '【隠し】5連続失敗！', sub: '「…もしかして、わざと？」\nまさかのシナリオ展開…！💊' },
 };
 
 /* ============================================================
