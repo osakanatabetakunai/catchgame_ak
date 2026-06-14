@@ -492,12 +492,12 @@ const ILLUSTS = {
 const CONFIG = {
   MOVE_INTERVAL: 100,   // 受けが横移動する間隔(ms)
   FALL_HOLD:     2200,  // 横移動してから何ms後に落下開始
-  FALL_DURATION:  2000,  // 落下アニメーション時間(ms)
+  FALL_DURATION: 2000,  // 落下アニメーション時間(ms)
   SEME_SPEED:     7,    // 攻めの移動速度(px/frame)
   MAX_SUCCESS:    5,    // 最大成功回数
   MAX_MISS:       5,    // 失敗で使うハートの数
   CATCH_MARGIN:   60,   // キャッチ判定の横マージン(px)
-  CATCH_MARGIN_V: 55,   // キャッチ判定の縦マージン(px)
+  CATCH_MARGIN_V: 35,   // キャッチ判定の縦マージン(px)
 
   // ★ ウロウロ設定（ここで調整できます）
   WANDER_INTERVAL: 800, // 何ms間隔でウロウロ移動するか（大きいほどゆっくり）
@@ -688,7 +688,7 @@ function startUkeFall() {
   ukeFalling = true;
   ukeEl.classList.add('falling');
   ukeEl.style.transition = `top ${CONFIG.FALL_DURATION}ms cubic-bezier(.2,.8,.4,1)`;
-  const fallTarget = areaHeight() - 130;
+  const fallTarget = areaHeight() - 160;
   ukeEl.style.top = fallTarget + 'px';
 
   fallTimer = setTimeout(() => {
