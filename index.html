@@ -497,7 +497,7 @@ const CONFIG = {
   MAX_SUCCESS:    5,    // 最大成功回数
   MAX_MISS:       5,    // 失敗で使うハートの数
   CATCH_MARGIN:   60,   // キャッチ判定の横マージン(px)
-  CATCH_MARGIN_V: 65,   // キャッチ判定の縦マージン(px)
+  CATCH_MARGIN_V: 25,   // キャッチ判定の縦マージン(px)
 
   // ★ ウロウロ設定（ここで調整できます）
   WANDER_INTERVAL: 800, // 何ms間隔でウロウロ移動するか（大きいほどゆっくり）
@@ -688,7 +688,7 @@ function startUkeFall() {
   ukeFalling = true;
   ukeEl.classList.add('falling');
   ukeEl.style.transition = `top ${CONFIG.FALL_DURATION}ms cubic-bezier(.2,.8,.4,1)`;
-  const fallTarget = areaHeight() - 160;
+  const fallTarget = areaHeight() - 180;
   ukeEl.style.top = fallTarget + 'px';
 
   fallTimer = setTimeout(() => {
