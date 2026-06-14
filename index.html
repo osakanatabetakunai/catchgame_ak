@@ -703,7 +703,7 @@ function startUkeFall() {
 function checkCatch() {
   ukeFalling = false;
   const ukeBottom = parseInt(ukeEl.style.top || 18) + CHAR_W;
-  const semeTop   = areaHeight() - 24 - CHAR_W; / 2;  // ← ここだけ変更
+  const semeTop   = areaHeight() - 24 - CHAR_W / 2;  // ← ここだけ変更
   const vertOK    = Math.abs(ukeBottom - semeTop) < CONFIG.CATCH_MARGIN_V;
   const horizOK   = Math.abs(ukeX - semeX) < CONFIG.CATCH_MARGIN;
 
