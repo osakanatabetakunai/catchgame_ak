@@ -172,8 +172,8 @@
     opacity: 0;
     transition: opacity 0.4s;
   }
-  .skull { filter: grayscale(0.7); }
-  .skull.lit { filter: none; }
+  .skull { filter: grayscale(1) opacity(0.3); }  /* 未点灯：薄くグレー */
+  .skull.lit { filter: none; }                    /* 点灯：フルカラー */
 
   /* === GAME CANVAS AREA === */
   #game-area {
