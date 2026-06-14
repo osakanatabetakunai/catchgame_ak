@@ -425,8 +425,8 @@
   <div class="title-deco">つかまえて！</div>
   <div class="title-sub">― キャッチ・ラブ ―</div>
   <div class="how-to">
-    マウスを動かす・画面をなぞって <strong>攻め</strong> を操作して<br>
-    落ちてくる <strong>受け</strong> をキャッチしよう！<br>
+    マウスを動かす・画面をなぞって <strong>アスラン</strong> を操作して<br>
+    落ちてくる <strong>キラ</strong> をキャッチしよう！<br>
     5回成功でクリア 💕
   </div>
   <button class="start-btn" id="start-btn">スタート ▶</button>
@@ -490,9 +490,9 @@ const SEME_CHAR = '<img src="athrun_mini.png" style="width:60px;height:auto">'; 
 // イラスト差し替え: 絵文字 or HTMLタグ or テキスト
 const ILLUSTS = {
   // --- 成功イラスト ---
-  success1: { emoji:  '<img src="1080f01.png" style="max-width:90vw;height:auto;">', title: '成功！', sub: '「…受け止めてあげたよ」\nドキっ…💓' },
-  success3: { emoji: '<img src="yurusan.jpg" style="max-width:90vw;height:auto;">', title: '3回目の成功！', sub: '「逃がさないって言っただろ？」\n<br>逃げるキラが悪いんだ' },
-  success5: { emoji: '<img src="gsan.png" style="max-width:90vw;height:auto;">', title: 'クリア！✨', sub: '「もう離さない」\n──── ゲームクリア！<br>お誕生日おめでとう！ 🎉' },
+  success1: { emoji:  '<img src="1080f01.png" style="max-width:90vw;height:auto;">', title: '成功！', sub: '「…捕まえた」\nドキっ…💓' },
+  success3: { emoji: '<img src="yurusan.jpg" style="max-width:90vw;height:auto;">', title: '3回目の成功！', sub: '「逃がさないって言っただろ？」<br>逃げるキラが悪いんだ' },
+  success5: { emoji: '<img src="gsan.png" style="max-width:90vw;height:auto;">', title: 'クリア！✨', sub: '「もう離さない」\n──── ゲームクリア！お誕生日おめでとう！ 🎉' },
   // --- 失敗イラスト ---
   fail1: { emoji: '💔', title: '失敗…', sub: '「…間に合わなかった」\nごめん、ちゃんとつかまえるから… 🥺' },
   fail5streak: { emoji: '☠️', title: '【隠し】5連続失敗！', sub: '「…もしかして、わざと？」\nまさかのシナリオ展開…！😈💀' },
@@ -502,8 +502,8 @@ const ILLUSTS = {
    ゲーム設定
    ============================================================ */
 const CONFIG = {
-  MOVE_INTERVAL: 3000,   // 受けが横移動する間隔(ms)
-  FALL_HOLD:     3500,   // 横移動してから何ms後に落下開始
+  MOVE_INTERVAL: 2000,   // 受けが横移動する間隔(ms)
+  FALL_HOLD:     2200,   // 横移動してから何ms後に落下開始
   FALL_DURATION:  800,   // 落下アニメーション時間(ms)
   SEME_SPEED:     7,     // 攻めの移動速度(px/frame)
   MAX_SUCCESS:    5,     // 最大成功回数
