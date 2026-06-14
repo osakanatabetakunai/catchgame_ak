@@ -204,16 +204,13 @@
   #uke {
     position: absolute;
     top: 18px;
-    font-size: 3.2rem;
-    transition: left 0.35s cubic-bezier(.4,1.4,.6,1);
     filter: drop-shadow(0 0 8px rgba(255,110,180,0.7));
     z-index: 6;
     pointer-events: none;
-    /* Image swap: replace with <img> if needed */
   }
 
   #uke.falling {
-    transition: top 0.6s cubic-bezier(.2,.8,.4,1), left 0.35s cubic-bezier(.4,1.4,.6,1);
+    transition: top 0.6s cubic-bezier(.2,.8,.4,1) !important;
   }
 
   #seme {
@@ -289,11 +286,6 @@
     to   { transform: scale(1) rotate(0deg); opacity: 1; }
   }
 
-  /*
-    ★ イラスト差し替えの場合はここを変更 ★
-    .result-illust img { width: 240px; height: auto; }
-  */
-
   .result-title {
     font-size: 2rem;
     font-weight: 900;
@@ -306,6 +298,7 @@
     color: var(--accent2);
     text-align: center;
     line-height: 1.7;
+    white-space: pre-line;
   }
 
   .result-btn {
@@ -480,22 +473,15 @@
 <script>
 /* ============================================================
    🌸 キャラクター・イラスト設定
-   ============================================================
-   画像ファイルに差し替えたい場合は、下記の絵文字を
-   <img src="path/to/image.png"> タグのHTML文字列に変えてください。
-   例: UKE_CHAR = '<img src="uke.png" style="width:60px;height:auto">'
    ============================================================ */
-const UKE_CHAR  = '<img src="kira_mini.png" style="width:60px;height:auto">';   // 受けのキャラ
-const SEME_CHAR = '<img src="athrun_mini.png" style="width:60px;height:auto">';   // 攻めのキャラ
+const UKE_CHAR  = '<img src="kira_mini.png" style="width:60px;height:auto">';
+const SEME_CHAR = '<img src="athrun_mini.png" style="width:60px;height:auto">';
 
-// イラスト差し替え: 絵文字 or HTMLタグ or テキスト
 const ILLUSTS = {
-  // --- 成功イラスト ---
-  success1: { emoji:  '<img src="1080f01.png" style="max-width:90vw;height:auto;">', title: '成功！', sub: '「…捕まえた」\n…！離してっ!' },
-  success3: { emoji: '<img src="yurusan.png" style="max-width:90vw;height:auto;">', title: '3回目の成功！', sub: '「逃がさないって言っただろ？」\n逃げるキラが悪いんだ' },
-  success5: { emoji: '<img src="gsan.png" style="max-width:90vw;height:auto;">', title: 'クリア！✨', sub: '「もう離さない」\n──── ゲームクリア！お誕生日おめでとう！ 🎉' },
-  // --- 失敗イラスト ---
-  fail1: { emoji: '<img src="miss_01.png" style="max-width:90vw;height:auto;">', title: '失敗…', sub: '「…間に合わなかった」\nお仕置きが必要かな？' },
+  success1:    { emoji: '<img src="1080f01.png" style="max-width:90vw;height:auto;">', title: '成功！', sub: '「…捕まえた」\n…！離してっ!' },
+  success3:    { emoji: '<img src="yurusan.png" style="max-width:90vw;height:auto;">', title: '3回目の成功！', sub: '「逃がさないって言っただろ？」\n逃げるキラが悪いんだ' },
+  success5:    { emoji: '<img src="gsan.png" style="max-width:90vw;height:auto;">', title: 'クリア！✨', sub: '「もう離さない」\n──── ゲームクリア！お誕生日おめでとう！ 🎉' },
+  fail1:       { emoji: '<img src="miss_01.png" style="max-width:90vw;height:auto;">', title: '失敗…', sub: '「…間に合わなかった」\nお仕置きが必要かな？' },
   fail5streak: { emoji: '<img src="miss_02.png" style="max-width:90vw;height:auto;">', title: '【隠し】5連続失敗！', sub: '「…もしかして、わざと？」\nまさかのシナリオ展開…！💊' },
 };
 
@@ -504,13 +490,18 @@ const ILLUSTS = {
    ============================================================ */
 const CONFIG = {
   MOVE_INTERVAL: 100,   // 受けが横移動する間隔(ms)
-  FALL_HOLD:     2200,   // 横移動してから何ms後に落下開始
-  FALL_DURATION:  800,   // 落下アニメーション時間(ms)
-  SEME_SPEED:     7,     // 攻めの移動速度(px/frame)
-  MAX_SUCCESS:    5,     // 最大成功回数
-  MAX_MISS:       5,     // 失敗で使うハートの数
-  CATCH_MARGIN:   60,    // キャッチ判定の横マージン(px)
-  CATCH_MARGIN_V: 55,    // キャッチ判定の縦マージン(px)
+  FALL_HOLD:     2200,  // 横移動してから何ms後に落下開始
+  FALL_DURATION:  800,  // 落下アニメーション時間(ms)
+  SEME_SPEED:     7,    // 攻めの移動速度(px/frame)
+  MAX_SUCCESS:    5,    // 最大成功回数
+  MAX_MISS:       5,    // 失敗で使うハートの数
+  CATCH_MARGIN:   60,   // キャッチ判定の横マージン(px)
+  CATCH_MARGIN_V: 55,   // キャッチ判定の縦マージン(px)
+
+  // ★ ウロウロ設定（ここで調整できます）
+  WANDER_INTERVAL: 800, // 何ms間隔でウロウロ移動するか（大きいほどゆっくり）
+  WANDER_RANGE:    120, // 一回の移動で最大何px動くか（大きいほど大きく動く）
+  WANDER_SPEED:   '0.6s', // 移動アニメーションの速さ（大きいほどゆったり）
 };
 
 /* ============================================================
@@ -523,9 +514,9 @@ let gameRunning = false;
 let ukeFalling  = false;
 let ukeX        = 0;
 let semeX       = 0;
-let keysDown    = { left: false, right: false };
 let moveTimer   = null;
 let fallTimer   = null;
+let wanderTimer = null; // ★ ウロウロ用タイマー
 let animFrame   = null;
 let progressStart = 0;
 
@@ -613,12 +604,12 @@ function updateStreakBar() {
    ============================================================ */
 function areaWidth()  { return gameArea.clientWidth; }
 function areaHeight() { return gameArea.clientHeight; }
-const CHAR_W = 52; // approximate char width px
+const CHAR_W = 52;
 
 /* ============================================================
    Position helpers
    ============================================================ */
-function setUkeX(x, animate) {
+function setUkeX(x) {
   ukeX = Math.max(0, Math.min(areaWidth() - CHAR_W, x));
   ukeEl.style.left = ukeX + 'px';
 }
@@ -629,27 +620,54 @@ function setSemeX(x) {
 }
 
 /* ============================================================
+   ★ ウロウロ移動
+   落下前に受けが左右にふらふら動く
+   ============================================================ */
+function startWandering() {
+  if (!gameRunning || ukeFalling) return;
+
+  // 現在位置から少しずらした位置にゆっくり移動
+  const offset = (Math.random() - 0.5) * 2 * CONFIG.WANDER_RANGE;
+  const newX = ukeX + offset;
+  ukeEl.style.transition = `left ${CONFIG.WANDER_SPEED} ease-in-out`;
+  setUkeX(newX);
+
+  wanderTimer = setTimeout(startWandering, CONFIG.WANDER_INTERVAL);
+}
+
+function stopWandering() {
+  clearTimeout(wanderTimer);
+  wanderTimer = null;
+}
+
+/* ============================================================
    Uke movement cycle
    ============================================================ */
 function scheduleUkeMove() {
   if (!gameRunning) return;
-  clearTimeout(moveTimer);
+  stopWandering();
   clearTimeout(fallTimer);
 
-  // reset uke to top
+  // 受けを上部にリセット
+  ukeFalling = false;
   ukeEl.classList.remove('falling');
   ukeEl.style.top = '18px';
-  ukeEl.style.transition = 'left 0.35s cubic-bezier(.4,1.4,.6,1)';
 
-  // random X
-  const newX = Math.random() * (areaWidth() - CHAR_W);
-  setUkeX(newX, true);
+  // ランダムな初期位置にワープ（transition一時オフ）
+  ukeEl.style.transition = 'none';
+  const startX = Math.random() * (areaWidth() - CHAR_W);
+  setUkeX(startX);
 
-  // progress bar countdown
+  // ウロウロ開始
+  setTimeout(() => {
+    startWandering();
+  }, 50);
+
+  // プログレスバー
   progressStart = Date.now();
   updateProgress();
 
-  // after FALL_HOLD ms, start falling
+  // FALL_HOLD ms後に落下
   fallTimer = setTimeout(() => {
     if (!gameRunning) return;
     startUkeFall();
@@ -665,10 +683,10 @@ function updateProgress() {
 }
 
 function startUkeFall() {
+  stopWandering();
   ukeFalling = true;
   ukeEl.classList.add('falling');
-  ukeEl.style.transition = `top ${CONFIG.FALL_DURATION}ms cubic-bezier(.2,.8,.4,1), left 0.35s cubic-bezier(.4,1.4,.6,1)`;
-  // fall to just above seme area
+  ukeEl.style.transition = `top ${CONFIG.FALL_DURATION}ms cubic-bezier(.2,.8,.4,1)`;
   const fallTarget = areaHeight() - 130;
   ukeEl.style.top = fallTarget + 'px';
 
@@ -707,21 +725,10 @@ function onSuccess() {
   flashScreen('success');
   spawnParticles(ukeX, parseInt(ukeEl.style.top), ['💕','✨','💜','🌸']);
 
-  // Milestone illustrations
-  if (score === 5) {
-    showResult(ILLUSTS.success5, false);
-    return;
-  }
-  if (score === 3) {
-    showResult(ILLUSTS.success3, true);
-    return;
-  }
-  if (score === 1) {
-    showResult(ILLUSTS.success1, true);
-    return;
-  }
+  if (score === 5) { showResult(ILLUSTS.success5, false); return; }
+  if (score === 3) { showResult(ILLUSTS.success3, true);  return; }
+  if (score === 1) { showResult(ILLUSTS.success1, true);  return; }
 
-  // No overlay: show combo badge and continue
   showComboBadge(`成功 ${score}回目！`);
   scheduleUkeMove();
 }
@@ -738,7 +745,6 @@ function onMiss() {
   flashScreen('fail');
   spawnParticles(ukeX, parseInt(ukeEl.style.top), ['💧','😢','💦']);
 
-  // 5 consecutive fails (hidden)
   if (failStreak >= 5) {
     failStreak = 0;
     updateStreakBar();
@@ -746,13 +752,11 @@ function onMiss() {
     return;
   }
 
-  // 1st miss illustration
   if (missCount === 1 && failStreak === 1) {
     showResult(ILLUSTS.fail1, true);
     return;
   }
 
-  // All hearts gone → game over
   if (missCount >= CONFIG.MAX_MISS) {
     showResult({ emoji: '💔', title: 'ゲームオーバー…', sub: 'もう一度挑戦してみて！\n君ならきっとつかまえられる！' }, false);
     return;
@@ -766,7 +770,7 @@ function onMiss() {
    ============================================================ */
 function showResult(illust, canContinue) {
   gameRunning = false;
-  clearTimeout(moveTimer);
+  stopWandering();
   clearTimeout(fallTimer);
 
   resultIllust.innerHTML = illust.emoji;
@@ -786,7 +790,7 @@ function hideResult() {
    ============================================================ */
 function flashScreen(type) {
   catchFlash.className = '';
-  void catchFlash.offsetWidth; // reflow
+  void catchFlash.offsetWidth;
   catchFlash.classList.add(`flash-${type}`);
   setTimeout(() => catchFlash.className = '', 280);
 }
@@ -796,8 +800,8 @@ function spawnParticles(x, y, emojis) {
     const p = document.createElement('div');
     p.className = 'particle';
     p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-    const angle  = Math.random() * Math.PI * 2;
-    const dist   = 60 + Math.random() * 60;
+    const angle = Math.random() * Math.PI * 2;
+    const dist  = 60 + Math.random() * 60;
     p.style.setProperty('--dx', `${Math.cos(angle)*dist}px`);
     p.style.setProperty('--dy', `${Math.sin(angle)*dist}px`);
     p.style.left = (x + CHAR_W/2) + 'px';
@@ -814,11 +818,10 @@ function showComboBadge(text) {
 }
 
 /* ============================================================
-   Game loop (seme movement)
+   Game loop
    ============================================================ */
 function gameLoop() {
   if (!gameRunning) return;
-  // 攻めの位置はマウス/タッチで直接更新されるため、ループはアニメ継続のみ
   animFrame = requestAnimationFrame(gameLoop);
 }
 
@@ -834,13 +837,11 @@ function applySemeFromClientX(clientX) {
   cursorLine.style.left = (semeX + CHAR_W / 2) + 'px';
 }
 
-// Mouse
 gameArea.addEventListener('mousemove', e => {
   if (!gameRunning) return;
   applySemeFromClientX(e.clientX);
 });
 
-// Touch (スマホ・タブレット対応)
 gameArea.addEventListener('touchmove', e => {
   if (!gameRunning) return;
   e.preventDefault();
@@ -852,7 +853,6 @@ gameArea.addEventListener('touchstart', e => {
   applySemeFromClientX(e.touches[0].clientX);
 }, { passive: true });
 
-// ゲームエリア外でもマウス追従（PC操作を快適に）
 document.addEventListener('mousemove', e => {
   if (!gameRunning) return;
   applySemeFromClientX(e.clientX);
@@ -883,21 +883,20 @@ document.getElementById('start-btn').addEventListener('click', () => {
 });
 
 function initGame() {
-  score       = 0;
-  missCount   = 0;
-  failStreak  = 0;
-  ukeFalling  = false;
+  score      = 0;
+  missCount  = 0;
+  failStreak = 0;
+  ukeFalling = false;
+  stopWandering();
 
   scoreDisp.textContent = '0';
   buildHeartsBar();
   buildStreakBar();
 
-  // Reset characters
   ukeEl.innerHTML  = UKE_CHAR;
   semeEl.innerHTML = SEME_CHAR;
   ukeEl.style.top  = '18px';
 
-  // Center seme
   setSemeX(areaWidth() / 2 - CHAR_W / 2);
   setUkeX(areaWidth() / 2 - CHAR_W / 2);
 
@@ -905,7 +904,6 @@ function initGame() {
   if (animFrame) cancelAnimationFrame(animFrame);
   gameLoop();
 
-  // Small delay before first uke move
   setTimeout(scheduleUkeMove, 600);
 }
 
